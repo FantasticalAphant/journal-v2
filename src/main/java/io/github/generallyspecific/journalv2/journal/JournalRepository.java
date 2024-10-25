@@ -1,4 +1,4 @@
-package io.github.generallyspecific.journalredux.journal;
+package io.github.generallyspecific.journalv2.journal;
 
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -14,17 +14,13 @@ import java.util.UUID;
 
 @Repository
 public interface JournalRepository extends JpaRepository<Journal, UUID> {
-    // Get all journals for a specific user sorted by creation date
-    @Query("SELECT j FROM Journal j WHERE j.authorId = :authorId ORDER BY j.createdAt DESC")
-    List<Journal> getAllJournalsForUserByCreatedAt(@Param("authorId") UUID authorId);
+    // Get all journals sorted by creation date
+    @Query("SELECT j FROM Journal j ORDER BY j.createdAt DESC")
+    List<Journal> getAllJournalsByCreatedAt();
 
-    // Get all journals for a specific user sorted by modification date
-    @Query("SELECT j FROM Journal j WHERE j.authorId = :authorId ORDER BY j.modifiedAt DESC")
-    List<Journal> getAllJournalsForUserByModifiedAt(@Param("authorId") UUID authorId);
-
-    // Get the most recently modified journal for a specific user (used for dashboard)
-    @Query("SELECT j FROM Journal j WHERE j.authorId = :authorId ORDER BY j.modifiedAt")
-    Page<Journal> getMostRecentlyModifiedJournalForUser(@Param("authorId") UUID authorId, Pageable pageable);
+    // Get all journals sorted by modification date
+    @Query("SELECT j FROM Journal j ORDER BY j.modifiedAt DESC")
+    List<Journal> getAllJournalsByModifiedAt();
 
     // Get the journal name from the journalId (used for the journal entry page)
     @Query("SELECT j.name FROM Journal j WHERE j.journalId = :journalId")

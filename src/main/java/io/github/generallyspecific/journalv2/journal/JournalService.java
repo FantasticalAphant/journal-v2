@@ -1,10 +1,6 @@
-package io.github.generallyspecific.journalredux.journal;
+package io.github.generallyspecific.journalv2.journal;
 
-import io.github.generallyspecific.journalredux.journalentry.JournalEntryRepository;
-import io.github.generallyspecific.journalredux.oauth2.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -14,20 +10,13 @@ import java.util.UUID;
 @Service
 public class JournalService {
     private final JournalRepository journalRepository;
-    private final JournalEntryRepository journalEntryRepository;
-    private final UserService userService;
 
     @Autowired
-    public JournalService(JournalRepository journalRepository, JournalEntryRepository journalEntryRepository, UserService userService) {
+    public JournalService(JournalRepository journalRepository) {
         this.journalRepository = journalRepository;
-        this.journalEntryRepository = journalEntryRepository;
-        this.userService = userService;
     }
 
     public void createJournal(Journal journal) {
-        UUID id = userService.getUserIdFromServiceIdAndService();
-
-        journal.setAuthorId(id);
         journal.setJournalId(UUID.randomUUID());
         journal.setCreatedAt(Instant.now());
         journal.setModifiedAt(Instant.now());
@@ -46,23 +35,12 @@ public class JournalService {
         journalRepository.save(j);
     }
 
-    public List<Journal> getAllJournalsForUserByCreatedAt(UUID authorId) {
-        return journalRepository.getAllJournalsForUserByCreatedAt(authorId);
+    public List<Journal> getAllJournalsByCreatedAt() {
+        return journalRepository.getAllJournalsByCreatedAt();
     }
 
-    public List<Journal> getAllJournalsForUserByModifiedAt(UUID authorId) {
-        return journalRepository.getAllJournalsForUserByModifiedAt(authorId);
-    }
-
-    public Journal getMostRecentJournalForUser(UUID authorId) {
-        Page<Journal> journalPage = journalRepository.getMostRecentlyModifiedJournalForUser(authorId, PageRequest.of(0, 1));
-        Journal mostRecentJournal = null;
-
-        if (journalPage.hasContent()) {
-            mostRecentJournal = journalPage.getContent().get(0);
-        }
-
-        return mostRecentJournal;
+    public List<Journal> getAllJournalsByModifiedAt() {
+        return journalRepository.getAllJournalsByModifiedAt();
     }
 
     public Journal getJournalByJournalId(UUID journalId) {
@@ -72,6 +50,6 @@ public class JournalService {
     public void deleteJournalByJournalId(UUID journalId) {
         journalRepository.deleteJournalByJournalId(journalId);
         // Also delete all the corresponding entries
-        journalEntryRepository.deleteJournalEntriesByJournalId(journalId);
+//        journalEntryRepository.deleteJournalEntriesByJournalId(journalId);
     }
 }

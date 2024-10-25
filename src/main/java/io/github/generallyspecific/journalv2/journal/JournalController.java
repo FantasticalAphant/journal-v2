@@ -1,6 +1,5 @@
-package io.github.generallyspecific.journalredux.journal;
+package io.github.generallyspecific.journalv2.journal;
 
-import io.github.generallyspecific.journalredux.oauth2.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,18 +11,16 @@ import java.util.UUID;
 @CrossOrigin(origins = "http://localhost:3000")
 public class JournalController {
     private final JournalService journalService;
-    private final UserService userService;
 
     @Autowired
-    public JournalController(JournalService journalService, UserService userService) {
+    public JournalController(JournalService journalService) {
         this.journalService = journalService;
-        this.userService = userService;
     }
 
     // Get all journals
     @GetMapping("/journals")
     public List<Journal> getJournals() {
-        return journalService.getAllJournalsForUserByModifiedAt(userService.getUserIdFromServiceIdAndService());
+        return journalService.getAllJournalsByCreatedAt();
     }
 
     // Create a new journal

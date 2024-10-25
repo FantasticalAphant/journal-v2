@@ -1,4 +1,4 @@
-package io.github.generallyspecific.journalredux.journal;
+package io.github.generallyspecific.journalv2.journal;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,11 +11,6 @@ import java.util.UUID;
 @Entity
 @Table(name="journals")
 public class Journal {
-
-    @Column(name="author_id")
-    private UUID authorId;
-
-    // TODO: make sure journal names are unique for a given user
     private String name;
 
     @Id
@@ -35,21 +30,12 @@ public class Journal {
     public Journal() {
     }
 
-    public Journal(UUID authorId, String name, UUID journalId, Instant createdAt, Instant modifiedAt, String description) {
-        this.authorId = authorId;
+    public Journal(String name, UUID journalId, Instant createdAt, Instant modifiedAt, String description) {
         this.name = name;
         this.journalId = journalId;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
         this.description = description;
-    }
-
-    public UUID getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(UUID authorId) {
-        this.authorId = authorId;
     }
 
     public String getName() {
@@ -95,8 +81,7 @@ public class Journal {
     @Override
     public String toString() {
         return "Journal{" +
-                "authorId=" + authorId +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", journalId=" + journalId +
                 ", createdAt=" + createdAt +
                 ", modifiedAt=" + modifiedAt +
