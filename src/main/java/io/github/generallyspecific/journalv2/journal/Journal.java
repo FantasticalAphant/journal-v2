@@ -1,11 +1,11 @@
 package io.github.generallyspecific.journalv2.journal;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import io.github.generallyspecific.journalv2.journalentry.JournalEntry;
+import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -25,17 +25,19 @@ public class Journal {
 
     private String description;
 
-    // TODO: store the number of entries in the journal
+    @OneToMany(mappedBy = "journal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<JournalEntry> entries = new HashSet<>();
 
     public Journal() {
     }
 
-    public Journal(String name, UUID journalId, Instant createdAt, Instant modifiedAt, String description) {
+    public Journal(String name, UUID journalId, Instant createdAt, Instant modifiedAt, String description, Set<JournalEntry> entries) {
         this.name = name;
         this.journalId = journalId;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
         this.description = description;
+        this.entries = entries;
     }
 
     public String getName() {
@@ -78,6 +80,20 @@ public class Journal {
         this.description = description;
     }
 
+    public Set<JournalEntry> getEntries() {
+        return entries;
+    }
+
+    public void addEntry(JournalEntry entry) {
+        entries.add(entry);
+        entry.setJournal(this);
+    }
+
+    public void removeEntry(JournalEntry entry) {
+        entries.remove(entry);
+        entry.setJournal(null);
+    }
+
     @Override
     public String toString() {
         return "Journal{" +
@@ -86,6 +102,7 @@ public class Journal {
                 ", createdAt=" + createdAt +
                 ", modifiedAt=" + modifiedAt +
                 ", description='" + description + '\'' +
+                ", entries=" + entries +
                 '}';
     }
 }
