@@ -6,7 +6,10 @@ const {data: entries} = await useFetch("http://localhost:8080/entries");
 </script>
 
 <template>
-  <MainShell>
+  <MainShell
+      title="Entries"
+      :path="$route.path"
+  >
     <pre>{{entries}}</pre>
 
     <div v-if="entries">

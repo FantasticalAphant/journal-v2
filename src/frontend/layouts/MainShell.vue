@@ -3,6 +3,11 @@ import {Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIte
 import {MagnifyingGlassIcon} from '@heroicons/vue/20/solid'
 import {Bars3Icon, BellIcon, XMarkIcon} from '@heroicons/vue/24/outline'
 
+const props = defineProps<{
+  title: string;
+  path: string;
+}>()
+
 const user = {
   name: 'Tom Cook',
   email: 'tom@example.com',
@@ -10,12 +15,15 @@ const user = {
       'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 }
 const navigation = [
-  {name: 'Dashboard', href: '#', current: true},
-  {name: 'Team', href: '#', current: false},
-  {name: 'Projects', href: '#', current: false},
+  {name: 'Dashboard', href: '#', current: false},
+  {name: 'Journals', href: '/journals', current: false},
+  {name: 'Entry', href: '/entries', current: false},
   {name: 'Calendar', href: '#', current: false},
-  {name: 'Reports', href: '#', current: false},
-]
+  {name: 'Settings', href: '#', current: false},
+].map(item => ({
+  ...item,
+  current: item.href === props.path,
+}))
 const userNavigation = [
   {name: 'Your Profile', href: '#'},
   {name: 'Settings', href: '#'},
@@ -46,9 +54,18 @@ const userNavigation = [
               </div>
               <div class="hidden lg:ml-10 lg:block">
                 <div class="flex space-x-4">
-                  <a v-for="item in navigation" :key="item.name" :aria-current="item.current ? 'page' : undefined"
-                     :class="[item.current ? 'bg-indigo-700 text-white' : 'text-white hover:bg-indigo-500 hover:bg-opacity-75', 'rounded-md px-3 py-2 text-sm font-medium']"
-                     :href="item.href">{{ item.name }}</a>
+                  <NuxtLink
+                      v-for="item in navigation"
+                      :key="item.name"
+                      :to="item.href"
+                      :class="[
+                      item.current ? 'bg-indigo-700 text-white' : 'text-white hover:bg-indigo-500 hover:bg-opacity-75',
+                      'rounded-md px-3 py-2 text-sm font-medium'
+                    ]"
+                      @click.prevent="navigateTo(item.href)"
+                  >
+                    {{ item.name }}
+                  </NuxtLink>
                 </div>
               </div>
             </div>
@@ -119,12 +136,18 @@ const userNavigation = [
 
         <DisclosurePanel class="lg:hidden">
           <div class="space-y-1 px-2 pb-3 pt-2">
-            <DisclosureButton v-for="item in navigation" :key="item.name"
-                              :aria-current="item.current ? 'page' : undefined"
-                              :class="[item.current ? 'bg-indigo-700 text-white' : 'text-white hover:bg-indigo-500 hover:bg-opacity-75', 'block rounded-md px-3 py-2 text-base font-medium']"
-                              :href="item.href"
-                              as="a">{{ item.name }}
-            </DisclosureButton>
+            <NuxtLink
+                v-for="item in navigation"
+                :key="item.name"
+                :to="item.href"
+                :class="[
+                item.current ? 'bg-indigo-700 text-white' : 'text-white hover:bg-indigo-500 hover:bg-opacity-75',
+                'block rounded-md px-3 py-2 text-base font-medium'
+              ]"
+                @click.prevent="navigateTo(item.href)"
+            >
+              {{ item.name }}
+            </NuxtLink>
           </div>
           <div class="border-t border-indigo-700 pb-3 pt-4">
             <div class="flex items-center px-5">
@@ -154,7 +177,7 @@ const userNavigation = [
       </Disclosure>
       <header class="py-10">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h1 class="text-3xl font-bold tracking-tight text-white">Dashboard</h1>
+          <h1 class="text-3xl font-bold tracking-tight text-white">{{title}}</h1>
         </div>
       </header>
     </div>

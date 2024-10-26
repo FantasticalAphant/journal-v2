@@ -3,11 +3,26 @@
 import MainShell from "~/layouts/MainShell.vue";
 
 const {data: journals} = await useFetch("http://localhost:8080/journals");
+
+function handleSubmit(event) {
+  event.preventDefault();
+  const input = document.getElementById('myInput');
+  console.log('Submitted value:', input.value);
+}
+
 </script>
 
 <template>
-  <MainShell>
+  <MainShell
+      title="Journals"
+      :path="$route.path"
+  >
     <pre>{{journals}}</pre>
+
+    <form @submit="handleSubmit">
+      <input type="text" id="myInput" placeholder="Enter your text here">
+      <button type="submit">Submit</button>
+    </form>
 
     <div v-if="journals">
       <ul>
