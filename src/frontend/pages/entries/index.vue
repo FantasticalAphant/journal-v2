@@ -15,7 +15,9 @@ const {data: entries} = await useFetch("http://localhost:8080/entries");
     <div v-if="entries">
       <ul>
         <li v-for="entry in entries" :key="entry.entryId">
-          Title: {{ entry.title }}
+          <NuxtLink class="text-blue-600" :to="`/entries/${entry.entryId}`">
+            Title: {{ entry.title }}
+          </NuxtLink>
           <br>
           Body: {{ entry.body }}
           <br>

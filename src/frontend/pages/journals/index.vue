@@ -27,7 +27,9 @@ function handleSubmit(event) {
     <div v-if="journals">
       <ul>
         <li v-for="journal in journals" :key="journal.journalId">
-          Name: {{ journal.name }}
+          <NuxtLink class="text-blue-600" :to="`/journals/${journal.journalId}`">
+            Name: {{ journal.name }}
+          </NuxtLink>
           <br>
           Description: {{ journal.description }}
           <br>
