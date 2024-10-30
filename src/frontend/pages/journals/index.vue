@@ -3,11 +3,25 @@
 import MainShell from "~/layouts/MainShell.vue";
 
 const {data: journals} = await useFetch("http://localhost:8080/journals");
+const journalName = ref("");
+const journalDescription = ref("");
 
-function handleSubmit(event) {
+async function handleSubmit(event) {
   event.preventDefault();
-  const input = document.getElementById('myInput');
-  console.log('Submitted value:', input.value);
+
+  await useFetch("http://localhost:8080/journals", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      name: journalName.value,
+      description: journalDescription.value
+    })
+  });
+
+  journalName.value = "";
+  journalDescription.value = "";
 }
 
 </script>
@@ -19,8 +33,9 @@ function handleSubmit(event) {
   >
     <pre>{{journals}}</pre>
 
-    <form @submit="handleSubmit">
-      <input type="text" id="myInput" placeholder="Enter your text here">
+    <form @submit="handleSubmit" class="flex flex-col max-w-xs">
+      <input v-model="journalName" placeholder="Name">
+      <textarea v-model="journalDescription" placeholder="Description"></textarea>
       <button type="submit">Submit</button>
     </form>
 
