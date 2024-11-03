@@ -31,33 +31,14 @@ async function handleSubmit(event) {
       title="Journals"
       :path="$route.path"
   >
-    <pre>{{journals}}</pre>
-
     <form @submit="handleSubmit" class="flex flex-col max-w-xs">
       <input v-model="journalName" placeholder="Name">
       <textarea v-model="journalDescription" placeholder="Description"></textarea>
       <button type="submit">Submit</button>
     </form>
+    <JournaListView :journals="journals"/>
+    <pre>{{journals}}</pre>
 
-    <div v-if="journals">
-      <ul>
-        <li v-for="journal in journals" :key="journal.journalId">
-          <NuxtLink class="text-blue-600" :to="`/journals/${journal.journalId}`">
-            Name: {{ journal.name }}
-          </NuxtLink>
-          <br>
-          Description: {{ journal.description }}
-          <br>
-          createdAt: {{ journal.createdAt }}
-          <br>
-          modifiedAt: {{ journal.modifiedAt }}
-          <br>
-          journalId: {{ journal.journalId }}
-          <br>
-          Entries: {{ journal.entries }}
-        </li>
-      </ul>
-    </div>
   </MainShell>
 </template>
 
