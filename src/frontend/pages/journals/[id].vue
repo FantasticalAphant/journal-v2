@@ -9,6 +9,9 @@ const {data: journal} = await useFetch(`http://localhost:8080/journals/${route.p
 
 <template>
   <MainShell title="Journals" :path="journals">
+    <div class="flex justify-end mb-3">
+      <NuxtLink to="/journals" class="bg-amber-500 rounded px-1 shadow">Back to all journals</NuxtLink>
+    </div>
     <pre>{{journal}}</pre>
     <div v-if="journal">
       <h1>Name: {{journal.name}}</h1>
