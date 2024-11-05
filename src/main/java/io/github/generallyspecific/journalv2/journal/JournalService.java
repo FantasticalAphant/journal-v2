@@ -2,12 +2,14 @@ package io.github.generallyspecific.journalv2.journal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class JournalService {
     private final JournalRepository journalRepository;
 
@@ -35,14 +37,17 @@ public class JournalService {
         journalRepository.save(j);
     }
 
+    @Transactional(readOnly = true)
     public List<Journal> getAllJournalsByCreatedAt() {
         return journalRepository.getAllJournalsByCreatedAt();
     }
 
+    @Transactional(readOnly = true)
     public List<Journal> getAllJournalsByModifiedAt() {
         return journalRepository.getAllJournalsByModifiedAt();
     }
 
+    @Transactional(readOnly = true)
     public Journal getJournalByJournalId(UUID journalId) {
         return journalRepository.getJournalByJournalId(journalId);
     }

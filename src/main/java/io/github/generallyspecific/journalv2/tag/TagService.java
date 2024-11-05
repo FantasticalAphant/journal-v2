@@ -5,6 +5,7 @@ import io.github.generallyspecific.journalv2.journalentry.JournalEntryRepository
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class TagService {
     private final TagRepository tagRepository;
     private final JournalEntryRepository journalEntryRepository;
@@ -22,10 +24,12 @@ public class TagService {
         this.journalEntryRepository = journalEntryRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Tag> getAllTags() {
         return tagRepository.getAllTags();
     }
 
+    @Transactional(readOnly = true)
     public List<Tag> getTwoMostRecentTags() {
         return tagRepository.findTwoMostRecentlyModifiedTags(PageRequest.of(0, 2));
     }
@@ -61,6 +65,7 @@ public class TagService {
     }
 
     // Get all the corresponding journal entries for a specific tag
+    @Transactional(readOnly = true)
     public List<JournalEntry> getEntriesForTag(UUID tagId) {
         return tagRepository.getEntriesForTag(tagId);
     }

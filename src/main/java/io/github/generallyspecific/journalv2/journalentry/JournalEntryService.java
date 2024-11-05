@@ -5,12 +5,14 @@ import io.github.generallyspecific.journalv2.journal.JournalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class JournalEntryService {
     private final JournalRepository journalRepository;
     private final JournalEntryRepository journalEntryRepository;
@@ -29,14 +31,17 @@ public class JournalEntryService {
         return journalInfo;
     }
 
+    @Transactional(readOnly = true)
     public List<JournalEntry> getAllJournalEntries() {
         return journalEntryRepository.getAllJournalEntries();
     }
 
+    @Transactional(readOnly = true)
     public List<JournalEntry> getThreeMostRecentJournalEntries() {
         return journalEntryRepository.findThreeMostRecentlyModifiedEntries(PageRequest.of(0, 3));
     }
 
+    @Transactional(readOnly = true)
     public JournalEntry getJournalEntry(UUID entryId) {
         return journalEntryRepository.findJournalEntryByEntryId(entryId);
     }
