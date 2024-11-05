@@ -2,7 +2,18 @@
 
 import MainShell from "~/layouts/MainShell.vue";
 
-const {data: entries} = await useFetch("http://localhost:8080/entries");
+const {data: entries, refresh} = await useFetch("http://localhost:8080/entries");
+
+async function handleDelete(id, journalId) {
+  console.log(id)
+  console.log(journalId)
+  await $fetch(`http://localhost:8080/entry/${id}?journalId=${journalId}`, {
+    method: "DELETE",
+  })
+
+  await refresh();
+}
+
 </script>
 
 <template>
@@ -10,7 +21,7 @@ const {data: entries} = await useFetch("http://localhost:8080/entries");
       title="Entries"
       :path="$route.path"
   >
-    <EntryListView :entries="entries"/>
+    <EntryListView :entries="entries" :handle-delete="handleDelete"/>
 
     <pre>{{entries}}</pre>
   </MainShell>

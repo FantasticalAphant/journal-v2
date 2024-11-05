@@ -2,8 +2,9 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid'
 
-const props = defineProps({
+defineProps({
   entries: Array,
+  handleDelete: Function as PropType<(id: number, id: number) => Promise<void>>,
 })
 </script>
 
@@ -42,8 +43,11 @@ const props = defineProps({
                 >
               </MenuItem>
               <MenuItem v-slot="{ active }">
-                <a href="#" :class="[active ? 'bg-gray-50 outline-none' : '', 'block px-3 py-1 text-sm/6 text-gray-900']"
-                >Delete<span class="sr-only">, {{ entry.title }}</span></a
+                <button
+                    type="button"
+                    @click="handleDelete(entry.entryId, entry.journalId)"
+                    :class="[active ? 'bg-gray-50 outline-none' : '', 'block w-full text-left px-3 py-1 text-sm/6 text-gray-900']"
+                >Delete<span class="sr-only">, {{ entry.title }}</span></button
                 >
               </MenuItem>
             </MenuItems>
