@@ -32,7 +32,13 @@ async function handleSubmit(event) {
     <form @submit="handleSubmit" class="flex flex-col">
       <input v-model="journalName" placeholder="Name" class="pl-1 border-2 rounded">
       <textarea v-model="journalDescription" placeholder="Description" class="pl-1 border-2 mt-2 rounded"></textarea>
-      <button type="submit" class="border-2 rounded-md mt-2 bg-indigo-500 text-white shadow py-1 hover:bg-indigo-700">Submit</button>
+      <button
+          type="submit"
+          :disabled="!journalName"
+          class="border-2 rounded-md mt-2 bg-indigo-500 text-white shadow py-1 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        Submit
+      </button>
     </form>
     <JournaListView :journals="journals"/>
     <pre>{{journals}}</pre>
