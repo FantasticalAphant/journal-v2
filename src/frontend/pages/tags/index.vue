@@ -1,24 +1,22 @@
 <script setup lang="ts">
 
 import MainShell from "~/layouts/MainShell.vue";
-const {data: tags} = await useFetch("http://localhost:8080/tags");
+const {data: tags, refresh} = await useFetch("http://localhost:8080/tags");
 
 const tagName = ref("");
 
 async function handleSubmit(event) {
   event.preventDefault();
 
-  await useFetch("http://localhost:8080/tags", {
+  await $fetch("http://localhost:8080/tags", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
+    body: {
       tagName: tagName.value,
-    })
+    }
   });
 
-  journalName.value = "";
+  tagName.value = "";
+  await refresh();
 }
 
 </script>
