@@ -2,26 +2,24 @@
 
 import MainShell from "~/layouts/MainShell.vue";
 
-const {data: journals} = await useFetch("http://localhost:8080/journals");
+const {data: journals, refresh} = await useFetch("http://localhost:8080/journals");
 const journalName = ref("");
 const journalDescription = ref("");
 
 async function handleSubmit(event) {
   event.preventDefault();
 
-  await useFetch("http://localhost:8080/journals", {
+  await $fetch("http://localhost:8080/journals", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
+    body: {
       name: journalName.value,
       description: journalDescription.value
-    })
+    }
   });
 
   journalName.value = "";
   journalDescription.value = "";
+  await refresh();
 }
 
 </script>
@@ -31,10 +29,10 @@ async function handleSubmit(event) {
       title="Journals"
       :path="$route.path"
   >
-    <form @submit="handleSubmit" class="flex flex-col max-w-xs">
-      <input v-model="journalName" placeholder="Name">
-      <textarea v-model="journalDescription" placeholder="Description"></textarea>
-      <button type="submit">Submit</button>
+    <form @submit="handleSubmit" class="flex flex-col">
+      <input v-model="journalName" placeholder="Name" class="pl-1 border-2 rounded">
+      <textarea v-model="journalDescription" placeholder="Description" class="pl-1 border-2 mt-2 rounded"></textarea>
+      <button type="submit" class="border-2 rounded-md mt-2 bg-indigo-500 text-white shadow py-1 hover:bg-indigo-700">Submit</button>
     </form>
     <JournaListView :journals="journals"/>
     <pre>{{journals}}</pre>
