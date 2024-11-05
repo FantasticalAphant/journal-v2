@@ -22,6 +22,14 @@ async function handleSubmit(event) {
   await refresh();
 }
 
+async function handleDelete(id) {
+  await $fetch(`http://localhost:8080/journals/${id}/delete`, {
+    method: "DELETE",
+  })
+
+  await refresh();
+}
+
 </script>
 
 <template>
@@ -40,7 +48,7 @@ async function handleSubmit(event) {
         Submit
       </button>
     </form>
-    <JournaListView :journals="journals"/>
+    <JournaListView :journals="journals" :handle-delete="handleDelete"/>
     <pre>{{journals}}</pre>
 
   </MainShell>
