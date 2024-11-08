@@ -29,17 +29,7 @@ async function handleSubmit(event) {
       <input v-model="tagName" placeholder="Name" class="pl-1 border-2 rounded">
       <button type="submit" class="bg-blue-500 text-white p-1 rounded">Submit</button>
     </form>
-    <pre>{{tags}}</pre>
-    <div v-if="tags">
-      <ul>
-        <li v-for="tag in tags" :key="tag.tagId">
-          <NuxtLink class="text-blue-600" :to="`/tags/${tag.tagId}`">
-            Name: {{ tag.tagName }}
-          </NuxtLink>
-          <p>Entries: {{ JSON.stringify(tag.entries) }}</p>
-        </li>
-      </ul>
-    </div>
+    <TagsListView :tags="tags"/>
   </MainShell>
 </template>
 

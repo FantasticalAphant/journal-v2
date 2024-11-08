@@ -64,6 +64,11 @@ public class TagService {
         journalEntryRepository.save(entry);
     }
 
+    @Transactional(readOnly = true)
+    public Tag getTag(UUID tagId) {
+        return tagRepository.findTagByTagId(tagId);
+    }
+
     // Get all the corresponding journal entries for a specific tag
     @Transactional(readOnly = true)
     public List<JournalEntry> getEntriesForTag(UUID tagId) {

@@ -44,9 +44,8 @@ public class TagController {
 
     // Show all entries for a tag
     @GetMapping("/tag/{tagId}")
-    public List<JournalEntry> getEntriesForTag(@PathVariable UUID tagId) {
-        return tagService.getEntriesForTag(tagId);
-        //TODO: return entry as well
+    public Tag getEntriesForTag(@PathVariable UUID tagId) {
+        return tagService.getTag(tagId);
     }
 
     // Rename tag
