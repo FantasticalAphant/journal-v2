@@ -14,7 +14,10 @@ defineProps({
     <li v-for="journal in journals" :key="journal.journalId" class="flex items-center justify-between gap-x-6 py-5">
       <div class="min-w-0">
         <div class="flex items-start gap-x-3">
-          <p class="text-sm/6 font-semibold text-gray-900">{{ journal.name }}</p>
+          <p class="text-sm/6 font-semibold text-gray-900">
+            {{ journal.name }}
+            <span class="inline-flex items-center rounded-full bg-gray-100 ml-1 px-1 py-1 text-xs font-medium text-gray-600"> {{journal.entries.length}} Entries</span>
+          </p>
         </div>
         <div class="mt-1 flex items-center gap-x-2 text-xs/5 text-gray-500">
           <p class="whitespace-nowrap">
