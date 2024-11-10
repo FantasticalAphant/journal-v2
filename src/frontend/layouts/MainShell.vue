@@ -51,7 +51,7 @@ const userNavigation = [
             <div class="flex items-center px-2 lg:px-0">
               <div class="flex-shrink-0">
                 <img alt="Your Company" class="block h-8 w-8"
-                     src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=300"/>
+                     src="https://uxwing.com/wp-content/themes/uxwing/download/education-school/diary-journal-color-icon.png"/>
               </div>
               <div class="hidden lg:ml-10 lg:block">
                 <div class="flex space-x-4">
