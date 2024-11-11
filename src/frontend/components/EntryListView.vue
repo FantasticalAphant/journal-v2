@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid'
+import type {Entry} from "~/types";
 
-defineProps({
-  entries: Array,
-  handleDelete: Function as PropType<(id: number, id: number) => Promise<void>>,
-})
+defineProps<{
+  entries: Entry[] | null;
+  handleDelete: (id1: number, id2: number) => Promise<void>;
+}>()
 </script>
 
 <template>

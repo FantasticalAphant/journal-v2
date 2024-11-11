@@ -1,8 +1,9 @@
 <script setup lang="ts">
 
 import MainShell from "~/layouts/MainShell.vue";
+import type {Tag} from "~/types";
 const route = useRoute();
-const {data: tag} = await useFetch(`http://localhost:8080/tag/${route.params.id}`);
+const {data: tag} = await useFetch<Tag>(`http://localhost:8080/tag/${route.params.id}`);
 </script>
 
 <template>

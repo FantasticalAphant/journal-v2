@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid'
+import type {Tag} from "~/types";
 
-defineProps({
-  tags: Array,
-})
+defineProps<{
+  tags: Tag[] | null
+}>();
 </script>
 
 <template>

@@ -1,11 +1,12 @@
 <script setup lang="ts">
 
 import MainShell from "~/layouts/MainShell.vue";
-const {data: tags, refresh} = await useFetch("http://localhost:8080/tags");
+import type {Tag} from "~/types";
+const {data: tags, refresh} = await useFetch<Tag[]>("http://localhost:8080/tags");
 
 const tagName = ref("");
 
-async function handleSubmit(event) {
+async function handleSubmit(event: Event) {
   event.preventDefault();
 
   await $fetch("http://localhost:8080/tags", {

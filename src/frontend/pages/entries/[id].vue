@@ -1,8 +1,10 @@
 <script setup lang="ts">
 
 import MainShell from "~/layouts/MainShell.vue";
+import type {Entry} from "~/types";
 const route = useRoute();
-const {data: entry} = await useFetch(`http://localhost:8080/entry/${route.params.id}`);
+const {data: entry} = await useFetch<Entry>(`http://localhost:8080/entry/${route.params.id}`);
+
 </script>
 
 <template>

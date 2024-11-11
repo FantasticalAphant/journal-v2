@@ -1,12 +1,13 @@
 <script setup lang="ts">
 
 import MainShell from "~/layouts/MainShell.vue";
+import type {Journal} from "~/types";
 
-const {data: journals, refresh} = await useFetch("http://localhost:8080/journals");
+const {data: journals, refresh} = await useFetch<Journal[]>("http://localhost:8080/journals");
 const journalName = ref("");
 const journalDescription = ref("");
 
-async function handleSubmit(event) {
+async function handleSubmit(event: Event) {
   event.preventDefault();
 
   await $fetch("http://localhost:8080/journals", {
@@ -22,7 +23,7 @@ async function handleSubmit(event) {
   await refresh();
 }
 
-async function handleDelete(id) {
+async function handleDelete(id: number) {
   await $fetch(`http://localhost:8080/journals/${id}/delete`, {
     method: "DELETE",
   })

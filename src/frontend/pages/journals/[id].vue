@@ -1,14 +1,15 @@
 <script setup lang="ts">
 
 import MainShell from "~/layouts/MainShell.vue";
+import type {Journal} from "~/types";
 
 const route = useRoute();
-const {data: journal} = await useFetch(`http://localhost:8080/journals/${route.params.id}`);
+const {data: journal} = await useFetch<Journal>(`http://localhost:8080/journals/${route.params.id}`);
 
 </script>
 
 <template>
-  <MainShell title="Journals" :path="journals">
+  <MainShell title="Journals" path="journals">
     <div class="flex justify-end mb-3">
       <NuxtLink to="/journals" class="bg-amber-500 rounded px-1 shadow">Back to all journals</NuxtLink>
     </div>
