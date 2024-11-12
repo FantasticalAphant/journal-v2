@@ -51,7 +51,7 @@ public class JournalEntryService {
         journalEntryRepository.deleteJournalEntryByJournalIdAndEntryId(journalId, entryId);
     }
 
-    public void createJournalEntry(UUID journalId, JournalEntry entry) {
+    public JournalEntry createJournalEntry(UUID journalId, JournalEntry entry) {
         // TODO: Create title from body if the title is not provided
         Journal journal = journalRepository.getJournalByJournalId(journalId);
         entry.setJournal(journal);
@@ -62,6 +62,7 @@ public class JournalEntryService {
         entry.setBody(entry.getBody().trim());
 
         journalEntryRepository.save(entry);
+        return entry;
     }
 
     public void updateJournalEntry(UUID entryId, JournalEntry entry) {

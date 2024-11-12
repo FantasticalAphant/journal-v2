@@ -1,6 +1,7 @@
 package io.github.generallyspecific.journalv2.journalentry;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,10 +26,10 @@ public class JournalEntryController {
 
     // Create a new entry for a journal
     @PostMapping("/journals/{journalId}")
-    public ResponseEntity<Void> entrySubmit(@PathVariable UUID journalId, @RequestBody JournalEntry entry) {
-        journalEntryService.createJournalEntry(journalId, entry);
+    public ResponseEntity<JournalEntry> entrySubmit(@PathVariable UUID journalId, @RequestBody JournalEntry entry) {
+        JournalEntry newEntry = journalEntryService.createJournalEntry(journalId, entry);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(newEntry);
     }
 
     // Display individual entry
@@ -44,7 +45,7 @@ public class JournalEntryController {
 
     // Update individual entry
     @PostMapping("/entry/{entryId}")
-    public ResponseEntity<Void> updateEntry(@PathVariable UUID entryId, @ModelAttribute JournalEntry entry) {
+    public ResponseEntity<Void> updateEntry(@PathVariable UUID entryId, @RequestBody JournalEntry entry) {
         journalEntryService.updateJournalEntry(entryId, entry);
 
         return ResponseEntity.ok().build();
