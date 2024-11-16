@@ -40,7 +40,7 @@ async function handleDelete(id: number) {
   >
     <form @submit="handleSubmit" class="flex flex-col">
       <input v-model="journalName" placeholder="Name" class="pl-1 border-2 rounded">
-      <textarea v-model="journalDescription" placeholder="Description" class="pl-1 border-2 mt-2 rounded"></textarea>
+      <textarea v-model="journalDescription" placeholder="Description" class="pl-1 border-2 mt-2 rounded resize-none"></textarea>
       <button
           type="submit"
           :disabled="!journalName"
