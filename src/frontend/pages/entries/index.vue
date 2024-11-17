@@ -22,13 +22,16 @@ async function handleDelete(id: number, journalId: number) {
       title="Entries"
       :path="$route.path"
   >
-    <div>
+
+    <form>
+      <JournalSelector class="pb-2"/>
       <NuxtLink to="/entries/create/">
         <button type="button" class="bg-indigo-600 w-12 rounded py-1 text-white text-2xl">
           +
         </button>
       </NuxtLink>
-    </div>
+    </form>
+
     <EntryListView :entries="entries" :handle-delete="handleDelete"/>
 
     <pre>{{entries}}</pre>
