@@ -6,6 +6,7 @@ const props = withDefaults(defineProps<{
   id?: string;
   title?: string;
   body?: string;
+  journalId?: string;
 }>(), {
   title: "",
   body: "",
@@ -13,6 +14,7 @@ const props = withDefaults(defineProps<{
 
 const title = ref(props.title)
 const content = ref(props.body)
+const journalId = ref(props.journalId)
 const wordCount = ref(0)
 const hasUnsavedChanges = ref(false)
 const lastSaved = ref(new Date())
@@ -25,9 +27,8 @@ const saveEntry = async (text: string) => {
   // TODO: Use more robust path checking
   // TODO: Also update the entry when the title is changed
   switch(true) {
-    case route.path === "/entries/create/":
-      // TODO: remove the hardcoded journal entry
-      const response: Entry = await $fetch("http://localhost:8080/journals/542eb373-10ad-45fb-8faa-8ae33c3fcfd4", {
+    case route.path.startsWith("/entries/create"):
+      const response: Entry = await $fetch(`http://localhost:8080/journals/${journalId.value}`, {
         method: "POST",
         body: {
           title: title.value,
@@ -37,7 +38,8 @@ const saveEntry = async (text: string) => {
 
       const entryId = response.entryId;
       navigateTo(`/entries/${entryId}`, {
-        replace: true
+        replace: true,
+        external: false
       })
       break;
     case route.path.startsWith("/entries"):

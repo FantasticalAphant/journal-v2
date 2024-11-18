@@ -1,12 +1,11 @@
 <script setup>
-import { ref } from 'vue'
-import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
+import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from '@headlessui/vue'
+import {CheckIcon, ChevronUpDownIcon} from '@heroicons/vue/20/solid'
 
 const {data: journals} = await useFetch("http://localhost:8080/journals")
 
 // Selected the journal based on a saved state or something like that
-const selected = ref(journals[0])
+const selected = defineModel()
 </script>
 
 <template>
