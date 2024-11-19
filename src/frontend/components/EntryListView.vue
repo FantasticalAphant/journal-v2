@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { EllipsisVerticalIcon } from '@heroicons/vue/20/solid'
+import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
+import {EllipsisVerticalIcon} from '@heroicons/vue/20/solid'
 import type {Entry} from "~/types";
 
 defineProps<{
@@ -20,6 +20,10 @@ defineProps<{
           <p class="whitespace-nowrap">
             {{ entry.body }}
           </p>
+          <span
+              class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">{{
+              entry.journalName
+            }}</span>
         </div>
       </div>
       <div class="flex flex-none items-center gap-x-4">
