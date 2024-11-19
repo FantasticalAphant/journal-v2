@@ -20,10 +20,11 @@ defineProps<{
           <p class="whitespace-nowrap">
             {{ entry.body }}
           </p>
-          <span
+          <NuxtLink :to="`/journals/${entry.journalId}`"
               class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">{{
               entry.journalName
-            }}</span>
+            }}
+          </NuxtLink>
         </div>
       </div>
       <div class="flex flex-none items-center gap-x-4">
