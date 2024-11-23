@@ -5,24 +5,23 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/", "/login/oauth2/**", "/login/**", "/logout/**").permitAll();
+                    // Public endpoints
+                    auth.requestMatchers("/", "/login/**").permitAll();
+                    // Protected endpoints - require authentication
                     auth.anyRequest().authenticated();
                 })
-                .logout(logout -> {
-                    logout.logoutSuccessUrl("/"); // redirect to home page after logout
-                    logout.clearAuthentication(true);
-                    logout.invalidateHttpSession(true);
-                })
-                .oauth2Login(Customizer.withDefaults()) // use default oauth2 login page
+                .oauth2Login(Customizer.withDefaults())
                 .build();
     }
 }

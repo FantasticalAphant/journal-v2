@@ -2,13 +2,14 @@ package io.github.generallyspecific.journalv2.journal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class JournalController {
     private final JournalService journalService;
 
@@ -19,7 +20,8 @@ public class JournalController {
 
     // Get all journals
     @GetMapping("/journals")
-    public List<Journal> getJournals() {
+    public List<Journal> getJournals(OAuth2AuthenticationToken authentication) {
+        System.out.println(authentication.getName());
         return journalService.getAllJournalsByCreatedAt();
     }
 

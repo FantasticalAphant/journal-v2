@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
@@ -24,9 +23,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     }
 
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        // TODO: remove logging and handle exceptions
-        Logger logger = Logger.getLogger(CustomOAuth2UserService.class.getName());
-        logger.log(java.util.logging.Level.INFO, "loadUser");
 
         // save user to database if they aren't already in it
         OAuth2User oAuth2User = super.loadUser(userRequest);
@@ -35,10 +31,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         String service = userRequest.getClientRegistration().getRegistrationId();
         String serviceId;
-
         String attributeName;
-
-        logger.log(java.util.logging.Level.INFO, "service: " + service);
 
 //        //rate limiting
 //        try {
@@ -55,14 +48,12 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             attributeName = "email";
             serviceId = String.valueOf(attributes.get(attributeName));
         } else {
-            logger.log(java.util.logging.Level.SEVERE, "Unknown service: " + service);
             attributeName = "unknown";
             serviceId = "unknown";
         }
 
         // Check if user is already in database
         Optional<User> optionalUser = userService.findUserByServiceIdAndService(serviceId, service);
-
         if (optionalUser.isEmpty()) {
             // Add User if not in database
             User newUser = new User();
