@@ -7,6 +7,7 @@ import MainShell from "~/layouts/MainShell.vue";
   <MainShell
       title="Dashboard"
       :path="$route.path">
+    <Login/>
   </MainShell>
 </template>
 
