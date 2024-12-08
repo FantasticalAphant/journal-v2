@@ -23,14 +23,6 @@ public class JournalEntryService {
         this.journalEntryRepository = journalEntryRepository;
     }
 
-    public JournalInfoDTO getJournalInfo(UUID journalId) {
-        JournalInfoDTO journalInfo = new JournalInfoDTO();
-        journalInfo.setJournalId(journalId);
-        journalInfo.setJournalName(journalRepository.getJournalNameFromJournalId(journalId));
-        journalInfo.setEntries(journalEntryRepository.findJournalEntriesByJournalId(journalId));
-        return journalInfo;
-    }
-
     @Transactional(readOnly = true)
     public List<JournalEntry> getAllJournalEntries() {
         return journalEntryRepository.getAllJournalEntries();

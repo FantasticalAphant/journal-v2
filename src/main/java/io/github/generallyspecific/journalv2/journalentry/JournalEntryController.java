@@ -18,12 +18,6 @@ public class JournalEntryController {
         this.journalEntryService = journalEntryService;
     }
 
-    // Show all entries for a journal
-    @GetMapping("/journals/{journalId}")
-    public JournalInfoDTO getJournals(@PathVariable UUID journalId) {
-        return journalEntryService.getJournalInfo(journalId);
-    }
-
     // Create a new entry for a journal
     @PostMapping("/journals/{journalId}")
     public ResponseEntity<JournalEntry> entrySubmit(@PathVariable UUID journalId, @RequestBody JournalEntry entry) {

@@ -23,6 +23,11 @@ public class JournalController {
         return journalService.getAllJournalsByCreatedAt();
     }
 
+    @GetMapping("/journals/{journalId}")
+    public Journal getJournal(@PathVariable UUID journalId) {
+        return journalService.getJournalByJournalId(journalId);
+    }
+
     // Create a new journal
     @PostMapping("/journals")
     public ResponseEntity<Void> createJournal(@RequestBody Journal journal) {
