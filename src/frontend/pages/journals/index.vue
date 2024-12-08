@@ -50,8 +50,6 @@ async function handleDelete(id: number) {
       </button>
     </form>
     <JournaListView :journals="journals" :handle-delete="handleDelete"/>
-    <pre>{{journals}}</pre>
-
   </MainShell>
 </template>
 
