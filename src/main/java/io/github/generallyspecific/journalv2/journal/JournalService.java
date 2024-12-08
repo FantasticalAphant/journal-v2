@@ -53,8 +53,6 @@ public class JournalService {
     }
 
     public void deleteJournalByJournalId(UUID journalId) {
-        journalRepository.deleteJournalByJournalId(journalId);
-        // Also delete all the corresponding entries
-//        journalEntryRepository.deleteJournalEntriesByJournalId(journalId);
+        journalRepository.deleteById(journalId);
     }
 }

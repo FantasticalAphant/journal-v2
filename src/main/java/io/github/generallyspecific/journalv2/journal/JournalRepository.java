@@ -1,10 +1,6 @@
 package io.github.generallyspecific.journalv2.journal;
 
-import jakarta.transaction.Transactional;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -29,10 +25,4 @@ public interface JournalRepository extends JpaRepository<Journal, UUID> {
     // Get journal by journalId
     @Query("SELECT j FROM Journal j WHERE j.journalId = :journalId")
     Journal getJournalByJournalId(@Param("journalId") UUID journalId);
-
-    // Delete a specific journal by journalId
-    @Modifying
-    @Transactional
-    @Query("DELETE FROM Journal j WHERE j.journalId = :journalId")
-    void deleteJournalByJournalId(@Param("journalId") UUID journalId);
 }
