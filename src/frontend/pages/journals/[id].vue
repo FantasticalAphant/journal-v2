@@ -13,14 +13,30 @@ const {data: journal} = await useFetch<Journal>(`http://localhost:8080/journals/
     <div class="flex justify-end mb-3">
       <NuxtLink to="/journals" class="bg-amber-500 rounded px-1 shadow">Back to all journals</NuxtLink>
     </div>
-    <pre>{{journal}}</pre>
     <div v-if="journal">
-      <h1>Name: {{journal.name}}</h1>
-      <p>Description: {{journal.description}}</p>
-      <p>createdAt: {{journal.createdAt}}</p>
-      <p>modifiedAt: {{journal.modifiedAt}}</p>
-      <p>journalId: {{journal.journalId}}</p>
-      <p>Entries: {{journal.entries}}</p>
+      <div class="border rounded py-2">
+        <p class="text-5xl text-center">{{ journal.name }}</p>
+        <p class="text-xl text-center">{{ journal.description }}</p>
+      </div>
+
+      <div class="my-14">
+        <ul>
+          <li v-for="entry in journal.entries" class="m-3 border rounded p-2 hover:bg-gray-50">
+            <NuxtLink :to="`http://localhost:3000/entries/${entry.entryId}`">
+              <p>Title: {{ entry.title }}</p>
+              <p>Body: {{ entry.body }}</p>
+              <p>Tags: {{ entry.tags }}</p>
+              <p>Created At: {{ entry.createdAt }}</p>
+              <p>Modified At: {{ entry.modifiedAt }}</p>
+            </NuxtLink>
+          </li>
+        </ul>
+      </div>
+
+      <div class="flex justify-around">
+        <p>Created @ {{ journal.createdAt }}</p>
+        <p>Last modified @ {{ journal.modifiedAt }}</p>
+      </div>
     </div>
   </MainShell>
 </template>
