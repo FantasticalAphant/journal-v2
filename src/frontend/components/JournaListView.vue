@@ -20,7 +20,7 @@ defineProps<{
             <span class="inline-flex items-center rounded-full bg-gray-100 ml-1 px-1 py-1 text-xs font-medium text-gray-600"> {{journal.entries.length}} Entries</span>
             <span
                 class="inline-flex items-center rounded-full bg-teal-100 ml-1 px-1 py-1 text-xs font-medium text-gray-600">
-              Modified at: {{ journal.modifiedAt }}
+              Modified at: {{ new Date(journal.modifiedAt).toLocaleString() }}
             </span>
           </p>
         </div>

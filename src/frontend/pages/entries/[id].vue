@@ -2,6 +2,7 @@
 
 import MainShell from "~/layouts/MainShell.vue";
 import type {Entry} from "~/types";
+
 const route = useRoute();
 const {data: entry} = await useFetch<Entry>(`http://localhost:8080/entry/${route.params.id}`);
 
@@ -14,8 +15,8 @@ const {data: entry} = await useFetch<Entry>(`http://localhost:8080/entry/${route
     <div v-if="entry">
       <p>Title: {{entry.title}}</p>
       <p>Body: {{entry.body}}</p>
-      <p>createdAt: {{entry.createdAt}}</p>
-      <p>modifiedAt: {{entry.modifiedAt}}</p>
+      <p>createdAt: {{ new Date(entry.createdAt).toLocaleString() }}</p>
+      <p>modifiedAt: {{ new Date(entry.modifiedAt).toLocaleString() }}</p>
       <p>Journal: {{entry.journalName}}</p>
       <p>Tags: {{entry.tags}}</p>
     </div>

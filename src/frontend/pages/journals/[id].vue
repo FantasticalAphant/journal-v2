@@ -26,16 +26,16 @@ const {data: journal} = await useFetch<Journal>(`http://localhost:8080/journals/
               <p>Title: {{ entry.title }}</p>
               <p>Body: {{ entry.body }}</p>
               <p>Tags: {{ entry.tags }}</p>
-              <p>Created At: {{ entry.createdAt }}</p>
-              <p>Modified At: {{ entry.modifiedAt }}</p>
+              <p>Created At: {{ new Date(entry.createdAt).toLocaleString() }}</p>
+              <p>Modified At: {{ new Date(entry.modifiedAt).toLocaleString() }}</p>
             </NuxtLink>
           </li>
         </ul>
       </div>
 
       <div class="flex justify-around">
-        <p>Created @ {{ journal.createdAt }}</p>
-        <p>Last modified @ {{ journal.modifiedAt }}</p>
+        <p>Created @ {{ new Date(journal.createdAt).toLocaleString() }}</p>
+        <p>Last modified @ {{ new Date(journal.modifiedAt).toLocaleString() }}</p>
       </div>
     </div>
   </MainShell>
