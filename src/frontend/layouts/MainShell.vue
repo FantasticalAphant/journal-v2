@@ -18,8 +18,9 @@ const navigation = [
   {name: 'Dashboard', href: '/', current: false},
   {name: 'Journals', href: '/journals', current: false},
   {name: 'Entries', href: '/entries', current: false},
-  {name: 'Calendar', href: '/calendar', current: false},
   {name: 'Tags', href: '/tags', current: false},
+  {name: 'Map', href: '/map', current: false},
+  {name: 'Calendar', href: '/calendar', current: false},
   {name: 'Settings', href: '/settings', current: false},
 ].map(item => ({
   ...item,
