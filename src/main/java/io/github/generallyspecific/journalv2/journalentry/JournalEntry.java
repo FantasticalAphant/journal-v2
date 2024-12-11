@@ -28,6 +28,7 @@ public class JournalEntry {
 
     private String title;
 
+    @Column(columnDefinition = "TEXT")
     private String body;
 
     @ManyToMany(cascade = {CascadeType.PERSIST})
