@@ -31,6 +31,9 @@ public class JournalEntry {
     @Column(columnDefinition = "TEXT")
     private String body;
 
+    private Double longitude;
+    private Double latitude;
+
     @ManyToMany(cascade = {CascadeType.PERSIST})
     @JoinTable(name = "journal_entry_tags",
             joinColumns = @JoinColumn(name = "entry_id"),
@@ -40,13 +43,15 @@ public class JournalEntry {
     public JournalEntry() {
     }
 
-    public JournalEntry(UUID entryId, Journal journal, Instant createdAt, Instant modifiedAt, String title, String body, Set<Tag> tags) {
+    public JournalEntry(UUID entryId, Journal journal, Instant createdAt, Instant modifiedAt, String title, String body, Double longitude, Double latitude, Set<Tag> tags) {
         this.entryId = entryId;
         this.journal = journal;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
         this.title = title;
         this.body = body;
+        this.longitude = longitude;
+        this.latitude = latitude;
         this.tags = tags;
     }
 
@@ -102,6 +107,22 @@ public class JournalEntry {
         this.body = body;
     }
 
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
     public Set<Tag> getTags() {
         return tags;
     }
@@ -119,6 +140,8 @@ public class JournalEntry {
                 ", modifiedAt=" + modifiedAt +
                 ", title='" + title + '\'' +
                 ", body='" + body + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
                 ", tags=" + tags +
                 '}';
     }
