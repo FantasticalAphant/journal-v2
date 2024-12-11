@@ -4,6 +4,8 @@ import MainShell from "~/layouts/MainShell.vue";
 import {LMap, LTileLayer} from "@vue-leaflet/vue-leaflet";
 import 'leaflet/dist/leaflet.css'
 
+const {coords} = useGeolocation()
+
 const zoom = ref(8);
 </script>
 
@@ -15,7 +17,7 @@ const zoom = ref(8);
     <div style="height:75vh; width:75vw">
       <LMap
           ref="map"
-          :center="[38.9072, -77.0369]"
+          :center="[coords.latitude, coords.longitude]"
           :use-global-leaflet="false"
           :zoom="zoom"
       >
