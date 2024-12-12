@@ -22,6 +22,7 @@ const lastSavedContent = ref("")
 const saveStatus = ref("")
 
 const route = useRoute()
+const {coords} = useGeolocation()
 
 const saveEntry = async (text: string) => {
   // TODO: Use more robust path checking
@@ -33,6 +34,8 @@ const saveEntry = async (text: string) => {
         body: {
           title: title.value,
           body: content.value,
+          latitude: coords.value.latitude,
+          longitude: coords.value.longitude,
         }
       })
 

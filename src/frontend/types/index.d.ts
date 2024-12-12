@@ -6,6 +6,8 @@ export interface Entry {
     modifiedAt: Date;
     journalName: string;
     journalId: number;
+    longitude: number;
+    latitude: number;
     tags: string[];
 }
 
