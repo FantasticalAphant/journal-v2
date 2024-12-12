@@ -22,6 +22,7 @@ const lastSavedContent = ref("")
 const saveStatus = ref("")
 
 const route = useRoute()
+const router = useRouter()
 const {coords} = useGeolocation()
 
 const saveEntry = async (text: string) => {
@@ -93,7 +94,7 @@ watch(content, () => {
   <div class="flex justify-between -mt-6">
     {{wordCount}} Words
     [{{saveStatus}}]
-    <NuxtLink to="/entries" class="bg-amber-500 rounded px-1 shadow">Back to all entries</NuxtLink>
+    <button class="bg-amber-500 rounded px-1 shadow" @click="router.back()">Back</button>
   </div>
   <input v-model="title" type="text" class="block w-full border-0 h-10 my-3 pl-2 rounded-md ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600" placeholder="Entry Title" />
   <textarea

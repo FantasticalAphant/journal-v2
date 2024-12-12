@@ -4,6 +4,7 @@ import MainShell from "~/layouts/MainShell.vue";
 import type {Journal} from "~/types";
 
 const route = useRoute();
+const router = useRouter();
 const {data: journal} = await useFetch<Journal>(`http://localhost:8080/journals/${route.params.id}`);
 
 </script>
@@ -11,7 +12,7 @@ const {data: journal} = await useFetch<Journal>(`http://localhost:8080/journals/
 <template>
   <MainShell title="Journals" path="journals">
     <div class="flex justify-end mb-3">
-      <NuxtLink to="/journals" class="bg-amber-500 rounded px-1 shadow">Back to all journals</NuxtLink>
+      <button class="bg-amber-500 rounded px-1 shadow" @click="router.back()">Back</button>
     </div>
     <div v-if="journal">
       <div class="border rounded py-2">
