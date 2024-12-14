@@ -5,10 +5,20 @@ import {LMap, LMarker, LPopup, LTileLayer} from "@vue-leaflet/vue-leaflet";
 import 'leaflet/dist/leaflet.css'
 import type {Entry} from "~/types";
 
-const {coords} = useGeolocation()
+const {coords} = useGeolocation();
 const {data: entries} = await useFetch<Entry[]>("http://localhost:8080/entries");
 
 const zoom = ref(5);
+
+// Update coords when they change
+// This hopefully fixes the Infinity coordinates issue
+const center = computed<[number, number] | undefined>(() => {
+  if (coords.value) {
+    return [coords.value.latitude, coords.value.longitude];
+  }
+  return undefined;
+})
+
 </script>
 
 <template>
@@ -19,9 +29,12 @@ const zoom = ref(5);
     <div style="height:75vh; width:75vw">
       <LMap
           ref="map"
-          :center="[coords.latitude, coords.longitude]"
+          :center="center"
           :use-global-leaflet="false"
           :zoom="zoom"
+          :max-zoom="18"
+          :min-zoom="3"
+          :zoom-animation="true"
       >
         <LTileLayer
             attribution="&amp;copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors"
