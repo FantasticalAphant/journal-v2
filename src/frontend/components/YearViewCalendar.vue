@@ -13,7 +13,8 @@ import {
   startOfWeek
 } from 'date-fns';
 
-const year = ref(new Date().getFullYear());
+const currentYear = new Date().getFullYear()
+const year = ref(currentYear);
 
 function generateMonthData(month: Date) {
   const start = startOfWeek(startOfMonth(month));
@@ -23,7 +24,7 @@ function generateMonthData(month: Date) {
     date: format(date, 'yyyy-MM-dd'),
     isCurrentMonth: isSameMonth(date, month),
     isToday: isToday(date)
-  }));
+  })).slice(0, 42); // fixes a bug that causes duplicate weekday headers
 
   return {
     name: format(month, 'MMMM'),
@@ -31,19 +32,34 @@ function generateMonthData(month: Date) {
   };
 }
 
-const months = Array.from({length: 12}, (_, i) => {
-  const date = new Date(year.value, i, 1);
-  return generateMonthData(date);
-});
+const months = computed(() =>
+    Array.from({length: 12}, (_, i) => {
+      const date = new Date(year.value, i, 1);
+      return generateMonthData(date);
+    })
+)
 
 </script>
 
 <template>
   <div>
     <header class="flex items-center justify-between border-b border-gray-200 px-6 py-4">
-      <h1 class="text-base font-semibold leading-6 text-gray-900">
-        <time :datetime="year.toString()">{{ year }}</time>
-      </h1>
+      <div class="mt-2 grid grid-cols-1">
+        <select
+            v-model="year"
+            class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+        >
+          <option v-for="y in Array.from({length: 25}, (_, i) => currentYear - 24 + i)"
+                  :key="y"
+                  :selected="y === year"
+          >{{ y }}
+          </option>
+        </select>
+        <ChevronDownIcon
+            aria-hidden="true"
+            class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"/>
+      </div>
+
       <div class="flex items-center">
         <div class="relative flex items-center rounded-md bg-white shadow-sm md:items-stretch">
           <button type="button" class="flex h-9 w-12 items-center justify-center rounded-l-md border-y border-l border-gray-300 pr-1 text-gray-400 hover:text-gray-500 focus:relative md:w-9 md:pr-0 md:hover:bg-gray-50">
