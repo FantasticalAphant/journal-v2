@@ -13,7 +13,7 @@ import {
   startOfWeek
 } from 'date-fns';
 
-const year = ref(2024);
+const year = ref(new Date().getFullYear());
 
 function generateMonthData(month: Date) {
   const start = startOfWeek(startOfMonth(month));
