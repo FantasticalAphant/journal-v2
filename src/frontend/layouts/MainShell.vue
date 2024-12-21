@@ -21,14 +21,13 @@ const navigation = [
   {name: 'Tags', href: '/tags', current: false},
   {name: 'Map', href: '/map', current: false},
   {name: 'Calendar', href: '/calendar', current: false},
-  {name: 'Settings', href: '/settings', current: false},
 ].map(item => ({
   ...item,
   current: item.href === props.path,
 }))
 const userNavigation = [
   {name: 'Your Profile', href: '#'},
-  {name: 'Settings', href: '#'},
+  {name: 'Settings', href: '/settings'},
   {name: 'Sign out', href: '#'},
 ]
 </script>
@@ -123,10 +122,11 @@ const userNavigation = [
                     <MenuItems
                         class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <MenuItem v-for="item in userNavigation" :key="item.name" v-slot="{ active }">
-                        <a :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
+                        <NuxtLink :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']"
                            :href="item.href">{{
                             item.name
-                          }}</a>
+                          }}
+                        </NuxtLink>
                       </MenuItem>
                     </MenuItems>
                   </transition>
