@@ -20,14 +20,18 @@ const hasUnsavedChanges = ref(false)
 const lastSaved = ref(new Date())
 const lastSavedContent = ref("")
 const saveStatus = ref("")
-const prompts = ref([])
 
 const route = useRoute()
 const router = useRouter()
 const {coords} = useGeolocation()
 
+const prompts = ref([])
+const isLoading = ref(false)
+
 const generatePrompts = async () => {
+  isLoading.value = true;
   prompts.value = await $fetch("http://localhost:8080/prompts");
+  isLoading.value = false;
 }
 
 const saveEntry = async (text: string) => {
@@ -118,7 +122,10 @@ watch(content, () => {
     </svg>
     <button class="text-3xl ml-2" @click="generatePrompts">Generate Prompts</button>
   </div>
-  <div v-if="prompts">
+  <div v-if="isLoading">
+    Loading...
+  </div>
+  <div v-if="prompts && !isLoading">
     <ul>
       <li v-for="(prompt, index) in prompts" :key="index">
         {{ prompt }}
