@@ -5,10 +5,24 @@ import {LMap, LMarker, LPopup, LTileLayer} from "@vue-leaflet/vue-leaflet";
 import 'leaflet/dist/leaflet.css'
 import type {Entry} from "~/types";
 
+const zoom = ref(5);
+
 const {coords} = useGeolocation();
 const {data: entries} = await useFetch<Entry[]>("http://localhost:8080/entries");
 
-const zoom = ref(5);
+const groupedEntries = computed(() => {
+  if (!entries.value) return [];
+  const groups = new Map();
+
+  entries.value.forEach(entry => {
+    const key = `${entry.latitude},${entry.longitude}`;
+    const group = groups.get(key) || [];
+    group.push(entry);
+    groups.set(key, group);
+  });
+
+  return Array.from(groups.values());
+});
 
 // Update coords when they change
 // This hopefully fixes the Infinity coordinates issue
@@ -42,19 +56,28 @@ const center = computed<[number, number] | undefined>(() => {
             name="OpenStreetMap"
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-
-
-        <!--        TODO: group entries with the same coordinates-->
-        <LMarker v-for="entry in entries" :key="entry.entryId"
-                 :lat-lng="[entry.latitude, entry.longitude]">
+        <LMarker
+            v-for="(group, index) in groupedEntries"
+            :key="index"
+            :lat-lng="[group[0].latitude, group[0].longitude]"
+        >
           <LPopup>
-            <NuxtLink :to="`http://localhost:3000/entries/${entry.entryId}`">
-              {{ entry.title }}
-            </NuxtLink>
+            <div class="popup-content">
+              <p v-if="group.length > 1" class="font-bold mb-2">
+                {{ group.length }} Entries at this location
+              </p>
+              <ul class="space-y-2">
+                <li v-for="entry in group" :key="entry.entryId">
+                  <NuxtLink :to="`http://localhost:3000/entries/${entry.entryId}`">
+                    {{ entry.title }}
+                  </NuxtLink>
+                </li>
+              </ul>
+            </div>
           </LPopup>
         </LMarker>
-
       </LMap>
+
     </div>
 
   </MainShell>
