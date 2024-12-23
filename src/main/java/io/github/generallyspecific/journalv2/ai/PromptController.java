@@ -28,7 +28,7 @@ public class PromptController {
     public ResponseEntity<PromptFormat> getPrompts() {
         if (bucket.tryConsume(1)) {
             PromptFormat prompts = chatClient.prompt()
-                    .user("Generate three journaling prompts.")
+                    .user("Generate journaling prompts.")
                     .call()
                     .entity(PromptFormat.class);
             return ResponseEntity.ok(prompts);
