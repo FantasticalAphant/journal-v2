@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Duration;
@@ -25,14 +26,19 @@ public class PromptController {
     }
 
     @GetMapping("/prompts")
-    public ResponseEntity<PromptFormat> getPrompts() {
+    public ResponseEntity<PromptFormat> getPrompts(@RequestParam(required = false) String theme) {
         if (bucket.tryConsume(1)) {
+            String promptText = !theme.isBlank()
+                    ? "The theme is " + theme + ". Generate journaling prompts."
+                    : "Generate journaling prompts.";
+
             PromptFormat prompts = chatClient.prompt()
-                    .user("Generate journaling prompts.")
+                    .user(promptText)
                     .call()
                     .entity(PromptFormat.class);
             return ResponseEntity.ok(prompts);
         }
         return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
     }
+
 }

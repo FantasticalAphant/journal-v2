@@ -27,10 +27,15 @@ const {coords} = useGeolocation()
 
 const prompts = ref([])
 const isLoading = ref(false)
+const promptTheme = ref("");
 
 const generatePrompts = async () => {
   isLoading.value = true;
-  prompts.value = await $fetch("http://localhost:8080/prompts");
+  prompts.value = await $fetch(`http://localhost:8080/prompts`, {
+    params: {
+      theme: promptTheme.value,
+    }
+  });
   isLoading.value = false;
 }
 
@@ -112,16 +117,28 @@ watch(content, () => {
       id="entry"
       placeholder="Entry Text"
       class="block w-full h-96 rounded-md text-xl border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 pl-2 resize-none"/>
-  <div class="flex items-center">
-    <svg class="size-6" fill="none" stroke="currentColor" stroke-width="{1.5}" viewBox="0 0 24 24"
-         xmlns="http://www.w3.org/2000/svg">
-      <path
-          d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
-    </svg>
-    <button class="text-3xl ml-2" @click="generatePrompts">Generate Prompts</button>
-  </div>
+
+  <form class="mt-2" @submit.prevent="generatePrompts">
+    <div class="flex items-center">
+      <label for="theme">Prompt Theme: </label>
+      <input
+          v-model="promptTheme"
+          class="border border-black rounded ml-1 pl-1"
+          name="theme"
+          type="text"/>
+    </div>
+    <div class="flex items-center">
+      <svg class="size-6" fill="none" stroke="currentColor" stroke-width="{1.5}" viewBox="0 0 24 24"
+           xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
+      </svg>
+      <button class="text-3xl ml-2" type="submit">Generate Prompts</button>
+    </div>
+  </form>
+
   <div v-if="isLoading">
     Loading...
   </div>
