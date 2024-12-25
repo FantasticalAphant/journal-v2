@@ -35,8 +35,6 @@ async function handleDelete(id: number, journalId: number) {
     </NuxtLink>
 
     <EntryListView :entries="entries" :handle-delete="handleDelete"/>
-
-    <pre>{{entries}}</pre>
   </MainShell>
 </template>
 
