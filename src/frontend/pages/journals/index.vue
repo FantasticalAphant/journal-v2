@@ -2,15 +2,16 @@
 
 import MainShell from "~/layouts/MainShell.vue";
 import type {Journal} from "~/types";
+import {API_URL} from "~/utils/api";
 
-const {data: journals, refresh} = await useFetch<Journal[]>("http://localhost:8080/journals");
+const {data: journals, refresh} = await useFetch<Journal[]>(`${API_URL}/journals`);
 const journalName = ref("");
 const journalDescription = ref("");
 
 async function handleSubmit(event: Event) {
   event.preventDefault();
 
-  await $fetch("http://localhost:8080/journals", {
+  await $fetch(`${API_URL}/journals`, {
     method: "POST",
     body: {
       name: journalName.value,
@@ -24,7 +25,7 @@ async function handleSubmit(event: Event) {
 }
 
 async function handleDelete(id: number) {
-  await $fetch(`http://localhost:8080/journals/${id}/delete`, {
+  await $fetch(`${API_URL}/journals/${id}/delete`, {
     method: "DELETE",
   })
 

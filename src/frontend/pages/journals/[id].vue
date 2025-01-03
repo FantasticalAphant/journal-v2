@@ -2,10 +2,11 @@
 
 import MainShell from "~/layouts/MainShell.vue";
 import type {Journal} from "~/types";
+import {API_URL} from "~/utils/api";
 
 const route = useRoute();
 const router = useRouter();
-const {data: journal} = await useFetch<Journal>(`http://localhost:8080/journals/${route.params.id}`);
+const {data: journal} = await useFetch<Journal>(`${API_URL}/journals/${route.params.id}`);
 
 </script>
 

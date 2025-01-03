@@ -1,8 +1,9 @@
 <script setup>
 import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from '@headlessui/vue'
 import {CheckIcon, ChevronUpDownIcon} from '@heroicons/vue/20/solid'
+import {API_URL} from "~/utils/api.js";
 
-const {data: journals} = await useFetch("http://localhost:8080/journals")
+const {data: journals} = await useFetch(`${API_URL}/journals`)
 
 // Selected the journal based on a saved state or something like that
 const selected = defineModel()

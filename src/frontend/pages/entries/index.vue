@@ -2,14 +2,15 @@
 
 import MainShell from "~/layouts/MainShell.vue";
 import type {Entry} from "~/types";
+import {API_URL} from "~/utils/api";
 
 const selectedJournal = ref(null)
-const {data: entries, refresh} = await useFetch<Entry[]>("http://localhost:8080/entries");
+const {data: entries, refresh} = await useFetch<Entry[]>(`${API_URL}/entries`);
 
 async function handleDelete(id: number, journalId: number) {
   console.log(id)
   console.log(journalId)
-  await $fetch(`http://localhost:8080/entry/${id}?journalId=${journalId}`, {
+  await $fetch(`${API_URL}/entry/${id}?journalId=${journalId}`, {
     method: "DELETE",
   })
 

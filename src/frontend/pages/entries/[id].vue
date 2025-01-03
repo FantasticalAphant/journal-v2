@@ -2,9 +2,10 @@
 
 import MainShell from "~/layouts/MainShell.vue";
 import type {Entry} from "~/types";
+import {API_URL} from "~/utils/api";
 
 const route = useRoute();
-const {data: entry} = await useFetch<Entry>(`http://localhost:8080/entry/${route.params.id}`);
+const {data: entry} = await useFetch<Entry>(`${API_URL}/entry/${route.params.id}`);
 
 </script>
 

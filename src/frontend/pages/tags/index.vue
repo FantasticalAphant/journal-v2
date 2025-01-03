@@ -2,14 +2,16 @@
 
 import MainShell from "~/layouts/MainShell.vue";
 import type {Tag} from "~/types";
-const {data: tags, refresh} = await useFetch<Tag[]>("http://localhost:8080/tags");
+import {API_URL} from "~/utils/api";
+
+const {data: tags, refresh} = await useFetch<Tag[]>(`${API_URL}/tags`);
 
 const tagName = ref("");
 
 async function handleSubmit(event: Event) {
   event.preventDefault();
 
-  await $fetch("http://localhost:8080/tags", {
+  await $fetch(`${API_URL}/tags`, {
     method: "POST",
     body: {
       tagName: tagName.value,

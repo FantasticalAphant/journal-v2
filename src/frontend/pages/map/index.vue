@@ -4,11 +4,12 @@ import MainShell from "~/layouts/MainShell.vue";
 import {LMap, LMarker, LPopup, LTileLayer} from "@vue-leaflet/vue-leaflet";
 import 'leaflet/dist/leaflet.css'
 import type {Entry} from "~/types";
+import {API_URL} from "~/utils/api";
 
 const zoom = ref(5);
 
 const {coords} = useGeolocation();
-const {data: entries} = await useFetch<Entry[]>("http://localhost:8080/entries");
+const {data: entries} = await useFetch<Entry[]>(`${API_URL}/entries`);
 
 const groupedEntries = computed(() => {
   if (!entries.value) return [];

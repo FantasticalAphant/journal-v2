@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import _ from "lodash"
 import type {Entry} from "~/types";
+import {API_URL} from "~/utils/api";
 
 const props = withDefaults(defineProps<{
   id?: string;
@@ -31,7 +32,7 @@ const promptTheme = ref("");
 
 const generatePrompts = async () => {
   isLoading.value = true;
-  prompts.value = await $fetch(`http://localhost:8080/prompts`, {
+  prompts.value = await $fetch(`${API_URL}/prompts`, {
     params: {
       theme: promptTheme.value,
     }
@@ -44,7 +45,7 @@ const saveEntry = async (text: string) => {
   // TODO: Also update the entry when the title is changed
   switch(true) {
     case route.path.startsWith("/entries/create"):
-      const response: Entry = await $fetch(`http://localhost:8080/journals/${journalId.value}`, {
+      const response: Entry = await $fetch(`${API_URL}/journals/${journalId.value}`, {
         method: "POST",
         body: {
           title: title.value,
@@ -61,7 +62,7 @@ const saveEntry = async (text: string) => {
       })
       break;
     case route.path.startsWith("/entries"):
-      await $fetch(`http://localhost:8080/entry/${props.id}`, {
+      await $fetch(`${API_URL}/entry/${props.id}`, {
         method: "POST",
         body: {
           title: title.value,
