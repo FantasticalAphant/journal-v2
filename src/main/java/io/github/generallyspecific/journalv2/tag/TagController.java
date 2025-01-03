@@ -1,6 +1,5 @@
 package io.github.generallyspecific.journalv2.tag;
 
-import io.github.generallyspecific.journalv2.journalentry.JournalEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "${cors.allowed.origins}")
 public class TagController {
     private final TagService tagService;
 
