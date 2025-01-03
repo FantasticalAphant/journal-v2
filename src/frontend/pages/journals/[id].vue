@@ -24,7 +24,7 @@ const {data: journal} = await useFetch<Journal>(`${API_URL}/journals/${route.par
       <div class="my-14">
         <ul>
           <li v-for="entry in journal.entries" class="m-3 border rounded p-2 hover:bg-gray-50">
-            <NuxtLink :to="`http://localhost:3000/entries/${entry.entryId}`">
+            <NuxtLink :to="`/entries/${entry.entryId}`">
               <p>Title: {{ entry.title }}</p>
               <p>Body: {{ entry.body }}</p>
               <p>Tags: {{ entry.tags }}</p>

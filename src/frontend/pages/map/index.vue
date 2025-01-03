@@ -69,7 +69,7 @@ const center = computed<[number, number] | undefined>(() => {
               </p>
               <ul class="space-y-2">
                 <li v-for="entry in group" :key="entry.entryId">
-                  <NuxtLink :to="`http://localhost:3000/entries/${entry.entryId}`">
+                  <NuxtLink :to="`/entries/${entry.entryId}`">
                     {{ entry.title }}
                   </NuxtLink>
                 </li>
