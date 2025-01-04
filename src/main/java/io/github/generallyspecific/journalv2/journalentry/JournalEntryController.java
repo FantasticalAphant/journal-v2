@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "${cors.allowed.origins")
+@CrossOrigin(origins = "${cors.allowed.origins}")
 public class JournalEntryController {
     private final JournalEntryService journalEntryService;
 
