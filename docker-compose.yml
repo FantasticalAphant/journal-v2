@@ -1,0 +1,31 @@
+services:
+  backend:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=jdbc:postgresql://db:5432/davidlin?user=davidlin&password=password
+
+  frontend:
+    build: ./src/frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_URL=http://localhost:8080
+    depends_on:
+      - backend
+
+  db:
+    image: postgres:17
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_DB=davidlin
+      - POSTGRES_USER=davidlin
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+volumes:
+  postgres_data:
