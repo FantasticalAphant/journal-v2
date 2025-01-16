@@ -1,5 +1,12 @@
 # Journaling App
 
+This journaling application allows you to create journal entries grouped by journals.
+You can also create tags to further group entries together by category.
+It also provides a map view that allows you to view your entries by location.
+There is also a calendar view so you can review your entries by date.
+
+This web application is built using Nuxt (Vue) for the frontend and Spring for the backend.
+
 ### Setting up environment variables:
 
 ```sh
