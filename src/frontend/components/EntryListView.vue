@@ -16,19 +16,23 @@ defineProps<{
         <div class="flex items-start gap-x-3">
           <p class="text-sm/6 font-semibold text-gray-900">{{ entry.title }}</p>
         </div>
-        <div class="mt-1 flex items-center gap-x-2 text-xs/5 text-gray-500">
-          <p class="whitespace-nowrap">
+        <div class="mt-1 grid items-center text-xs/5 text-gray-500">
+          <p>
             {{ entry.body }}
           </p>
-          <NuxtLink :to="`/journals/${entry.journalId}`"
-              class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">{{
-              entry.journalName
-            }}
-          </NuxtLink>
-          <span
-              class="inline-flex items-center rounded-md bg-orange-100 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+
+          <div class="flex gap-2 mt-1">
+            <NuxtLink :to="`/journals/${entry.journalId}`"
+                      class="inline-flex items-center rounded-md bg-blue-50 px-1 -ml-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 hover:bg-blue-100">
+              {{
+                entry.journalName
+              }}
+            </NuxtLink>
+            <span
+                class="inline-flex items-center rounded-md bg-orange-100 px-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
             {{ new Date(entry.createdAt).toLocaleString() }}
-          </span>
+            </span>
+          </div>
         </div>
       </div>
       <div class="flex flex-none items-center gap-x-4">
