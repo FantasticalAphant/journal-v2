@@ -8,12 +8,6 @@ const props = defineProps<{
   path: string;
 }>()
 
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-}
 const navigation = [
   {name: 'Dashboard', href: '/', current: false},
   {name: 'Journals', href: '/journals', current: false},
@@ -110,7 +104,7 @@ const userNavigation = [
                         class="relative flex rounded-full bg-indigo-600 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
                       <span class="absolute -inset-1.5"/>
                       <span class="sr-only">Open user menu</span>
-                      <img :src="user.imageUrl" alt="" class="h-8 w-8 rounded-full"/>
+                      <button class="h-8 w-8 rounded-full" type="button"/>
                     </MenuButton>
                   </div>
                   <transition enter-active-class="transition ease-out duration-100"
@@ -153,12 +147,8 @@ const userNavigation = [
           </div>
           <div class="border-t border-indigo-700 pb-3 pt-4">
             <div class="flex items-center px-5">
-              <div class="flex-shrink-0">
-                <img :src="user.imageUrl" alt="" class="h-10 w-10 rounded-full"/>
-              </div>
-              <div class="ml-3">
-                <div class="text-base font-medium text-white">{{ user.name }}</div>
-                <div class="text-sm font-medium text-indigo-300">{{ user.email }}</div>
+              <div>
+                <p class="text-indigo-200">Add text here</p>
               </div>
               <button
                   class="relative ml-auto flex-shrink-0 rounded-full bg-indigo-600 p-1 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600"
