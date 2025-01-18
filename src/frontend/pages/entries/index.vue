@@ -8,8 +8,6 @@ const selectedJournal = ref(null)
 const {data: entries, refresh} = await useFetch<Entry[]>(`${API_URL}/entries`);
 
 async function handleDelete(id: number, journalId: number) {
-  console.log(id)
-  console.log(journalId)
   await $fetch(`${API_URL}/entry/${id}?journalId=${journalId}`, {
     method: "DELETE",
   })

@@ -12,7 +12,6 @@ const {data: entry} = await useFetch<Entry>(`${API_URL}/entry/${route.params.id}
 <template>
   <MainShell title="Entries" path="entries">
     <EntryTextArea :title="entry.title" :body="entry.body" :id="entry.entryId"/>
-    <pre>{{entry}}</pre>
     <div v-if="entry">
       <p>Title: {{entry.title}}</p>
       <p>Body: {{entry.body}}</p>
