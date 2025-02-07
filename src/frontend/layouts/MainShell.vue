@@ -9,7 +9,6 @@ const props = defineProps<{
 }>()
 
 const navigation = [
-  {name: 'Dashboard', href: '/', current: false},
   {name: 'Journals', href: '/journals', current: false},
   {name: 'Entries', href: '/entries', current: false},
   {name: 'Tags', href: '/tags', current: false},
@@ -44,8 +43,10 @@ const userNavigation = [
               class="relative flex h-16 items-center justify-between lg:border-b lg:border-indigo-400 lg:border-opacity-25">
             <div class="flex items-center px-2 lg:px-0">
               <div class="flex-shrink-0">
-                <img alt="Your Company" class="block h-8 w-8"
-                     src="/diary-journal-color-icon.png"/>
+                <NuxtLink to="/">
+                  <img alt="Your Company" class="block h-8 w-8 hover:scale-125 transition"
+                       src="/diary-journal-color-icon.png"/>
+                </NuxtLink>
               </div>
               <div class="hidden lg:ml-10 lg:block">
                 <div class="flex space-x-4">
