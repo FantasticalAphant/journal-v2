@@ -8,7 +8,16 @@ import {API_URL} from "~/utils/api";
 
 const zoom = ref(5);
 
-const {coords} = useGeolocation();
+const {coords, error} = useGeolocation()
+
+const defaultCoords = {latitude: 38.9072, longitude: -77.0369} // Use DC as default coordinates
+const currentCoords = computed(() => {
+  if (error.value) {
+    return defaultCoords
+  }
+  return coords.value || defaultCoords
+})
+
 const {data: entries} = await useFetch<Entry[]>(`${API_URL}/entries`);
 
 const groupedEntries = computed(() => {
@@ -28,8 +37,8 @@ const groupedEntries = computed(() => {
 // Update coords when they change
 // This hopefully fixes the Infinity coordinates issue
 const center = computed<[number, number] | undefined>(() => {
-  if (coords.value) {
-    return [coords.value.latitude, coords.value.longitude];
+  if (currentCoords.value) {
+    return [currentCoords.value.latitude, currentCoords.value.longitude];
   }
   return undefined;
 })
